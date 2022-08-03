@@ -1,0 +1,24 @@
+# Gathers list of variants which are ALT or NEITHER for each of the target loci listed.
+
+pre_barcoding = function(a, t){
+  Alt_variants = c()
+  Neither_variants = c()
+  for (x in t$POS){
+    ind = which(a$target_match == x)
+    if (length(ind) == 0){v_a = "none"; v_n = "none"} else {
+      temp = a[c(ind),]
+      ind_a = which(temp$ran == "alt")
+      ind_n = which(temp$ran == "neither")
+      if (length(ind_a) == 0){v_a = "none"} else {
+        v_a = temp[c(ind_a),1]
+        v_a = str_c(v_a, sep = " ", collapse = " ")}
+      if (length(ind_n) == 0){v_n = "none"} else {
+        v_n = temp[c(ind_n),1]
+        v_n = str_c(v_n, sep = " ", collapse = " ")}
+    }
+    Alt_variants = c(Alt_variants, v_a)
+    Neither_variants = c(Neither_variants, v_n)}
+  df = data.frame(t,Alt_variants, Neither_variants, stringsAsFactors = FALSE)
+  return(df)
+}
+
