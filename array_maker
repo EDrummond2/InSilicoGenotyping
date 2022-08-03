@@ -1,0 +1,20 @@
+# takes a list of polymorphisms and builds an array including details such as locus...
+
+array_maker = function(l){
+  library(stringr)
+  loci = c()
+  bases = c()
+  ends = c()
+  for (x in l){
+    x = matrix_process_fixed(x)
+    loci = c(loci, as.numeric(x[[1]]))
+    if (length(x) > 1){
+      bases = c(bases, x[[2]])
+      b = strsplit(x[[2]], split = "")
+      b = b[[1]]
+      ends = c(ends, (as.integer(x[[1]]) + length(b)-1))} 
+    else {bases = c(bases, "none"); ends = c(ends, as.integer(x[[1]]))}
+  }
+  a = data.frame(l, loci, bases, ends, stringsAsFactors = FALSE)
+  return(a)
+}
