@@ -1,0 +1,18 @@
+# adds a column of the base relevant to deciding whether or not the variant is REF/ALT or NEITHER according to the taget microarray information
+
+find_base = function(a){
+  base = c()
+  for (x in 1:length(a[,1])){
+    t = a[x,4] # target locus
+    b = a[x,3] # variant base(s)
+    b = strsplit(b, split = "")
+    b = b[[1]] # now in list
+    v = as.numeric(a[x,2]) # variant locus
+    y = as.numeric(t) - v + 1
+    add = b[[y]]
+    base = c(base, add)
+  }
+  r = data.frame(a,base,stringsAsFactors = FALSE)
+  return(r)
+}
+
