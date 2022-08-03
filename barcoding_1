@@ -1,0 +1,16 @@
+#this first function will accept a list of samples variants, and compare it to a list of alt and neither variants, returning a 
+#list of number of intersect between two lists and the samples list.
+
+barcoding_1 = function(sv,a,n){
+  sv = strsplit(sv, split = " ")
+  sv = sv[[1]]
+  a = strsplit(a, split = " ")
+  a = a[[1]]
+  n = strsplit(n, split = " ")
+  n = n[[1]]
+  x = intersect(sv,a)
+  y = intersect(sv,n)
+  r = c(length(x),length(y))
+  return(r)
+}
+
