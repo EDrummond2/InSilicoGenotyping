@@ -1,0 +1,28 @@
+#takes the array from "array_maker" and compares to the POS, REF and ALT columns from TARGET. It returns a new df, around only the variants with a match or matches.
+
+linking_to_TARGETs = function(a,t){
+  library(stringr)
+  variant_match = c()
+  variation_pos = c()
+  variant_bases = c()
+  target_match = c()
+  for (x in 1:(length(a[[1]]))){
+      s = as.integer(a[x,2])
+      e = as.integer(a[x,4])
+      ind_up = which(t$POS >= s)
+      ind_down = which(t$POS <= e)
+      ind = intersect(ind_up, ind_down)
+    if (length(ind > 0)){
+      add = t$POS
+      add = add[c(ind)]
+      for(b in add){
+        #add = str_c(add, sep = " ", collapse = " ")
+        target_match = c(target_match, b)
+        variant_match = c(variant_match, a[x,1])
+        variation_pos = c(variation_pos, a[x,2])
+        variant_bases = c(variant_bases, a[x,3])}
+  }}
+  df = data.frame(variant_match, variation_pos, variant_bases, target_match, stringsAsFactors = FALSE)
+  return(df)
+  }
+
