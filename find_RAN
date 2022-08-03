@@ -1,0 +1,18 @@
+# defining if the base is REF/ALT or Neither.
+
+
+find_RAN = function(a,t){
+  ran = c()
+  for (x in 1:length(a[,1])){
+    ind = which(t$POS == a[x,4])
+    ref = t$REF
+    ref = ref[[ind]]
+    alt = t$ALT
+    alt = alt[[ind]]
+    if (a[x,5] == ref){add = "ref"} else {if(a[x,5] == alt){add = "alt"} else {add = "neither"}}
+    ran = c(ran, add)
+  }
+  r = data.frame(a,ran, stringsAsFactors = FALSE)
+  return(r)
+}
+
